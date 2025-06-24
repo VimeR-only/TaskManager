@@ -1,0 +1,8 @@
+/.vs
+/BlogProject/bin
+/BlogProject/obj
+/BlogProject/bin
+/TaskManager/TaskManager/obj
+/TaskManager/TaskManager/bin
+*.db
+/TaskManager/.vs

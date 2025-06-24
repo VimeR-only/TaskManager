@@ -1,0 +1,42 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using TaskManager.DTOs;
+using TaskManager.Services;
+
+namespace TaskManager.Controllers
+{
+    [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
+    public class TaskController : ControllerBase
+    {
+        private readonly ITaskService _taskService;
+
+        public TaskController(ITaskService taskService)
+        {
+            _taskService = taskService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Models.Task>> CreateTaskAsync(TaskCreateDto dto)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var task = await _taskService.CreateTaskAsync(dto, userId);
+
+            return Ok(task);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Models.Task>> GetAllTaskUserAsync()
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var task = await _taskService.GetAllTaskUserAsync(userId);
+
+            return Ok(task);
+        }
+
+    }
+}
