@@ -38,5 +38,15 @@ namespace TaskManager.Controllers
             return Ok(task);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Models.Task>> GetTaskUserIdAsync(int id)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var task = await _taskService.GetTaskUserIdAsync(userId, id);
+
+            return Ok(task);
+        }
+
     }
 }

@@ -6,3 +6,5 @@
 /TaskManager/TaskManager/bin
 *.db
 /TaskManager/.vs
+*.db-wal
+*.db-shm

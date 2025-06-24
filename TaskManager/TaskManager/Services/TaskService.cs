@@ -38,6 +38,11 @@ namespace TaskManager.Services
             return task;
         }
 
-        //public async Task<Models.Task>
+        public async Task<Models.Task> GetTaskUserIdAsync(int userId, int taskId)
+        {
+            var task = await _db.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+
+            return task;
+        }
     }
 }
