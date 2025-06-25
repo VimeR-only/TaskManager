@@ -44,5 +44,19 @@ namespace TaskManager.Services
 
             return task;
         }
+
+        public async Task<bool> DeleteTaskIdAsync(int userId, int taskId)
+        {
+            var task = await _db.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+
+            if (task == null)
+                return false;
+
+            _db.Tasks.Remove(task);
+
+            _db.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

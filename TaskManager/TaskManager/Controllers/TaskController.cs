@@ -48,5 +48,21 @@ namespace TaskManager.Controllers
             return Ok(task);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> DeleteTaskIdAsync(int id)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            bool status = await _taskService.DeleteTaskIdAsync(userId, id);
+
+            if (status)
+            {
+                return Ok($"Post {id} deleted.");
+            }
+            else
+            {
+                return BadRequest($"Failed to delete post {id}.");
+            }
+        }
     }
 }
