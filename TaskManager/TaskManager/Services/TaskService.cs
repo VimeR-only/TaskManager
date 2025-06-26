@@ -81,5 +81,21 @@ namespace TaskManager.Services
 
             return task;
         }
+
+        public async Task<Models.Task?> UpdateTaskAsync(int userId, int taskId, TaskUpdateDto dto)
+        {
+            var task = await _db.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+
+            if (task == null) return null;
+
+            task.Title = dto.Title;
+            task.Description = dto.Description;
+
+            _db.Update(task);
+
+            await _db.SaveChangesAsync();
+
+            return task;
+        }
     }
 }

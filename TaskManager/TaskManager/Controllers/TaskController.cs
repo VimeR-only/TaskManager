@@ -66,6 +66,16 @@ namespace TaskManager.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Models.Task>> UpdateTaskAsync(int id, TaskUpdateDto dto)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var task = await _taskService.UpdateTaskAsync(userId, id, dto);
+
+            return Ok(task);
+        }
+
         [HttpPut("update-status/{id}")]
         public async Task<ActionResult<Models.Task>> UpdateTaskStatusAsync(int id, taskStatus taskStatus)
         {
