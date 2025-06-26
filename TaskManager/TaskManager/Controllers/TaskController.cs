@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskManager.DTOs;
+using TaskManager.Models;
 using TaskManager.Services;
 
 namespace TaskManager.Controllers
@@ -57,11 +58,28 @@ namespace TaskManager.Controllers
 
             if (status)
             {
-                return Ok($"Post {id} deleted.");
+                return Ok(_taskService.GetTaskUserId(userId, id));
             }
             else
             {
                 return BadRequest($"Failed to delete post {id}.");
+            }
+        }
+
+        [HttpPut("update-status/{id}")]
+        public async Task<ActionResult<Models.Task>> UpdateTaskStatusAsync(int id, taskStatus taskStatus)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var task = await _taskService.UpdateTaskStatusAsync(userId, id, taskStatus);
+
+            if (task != null)
+            {
+                return Ok(task);
+            }
+            else
+            {
+                return BadRequest($"Failed to update post {id}.");
             }
         }
     }

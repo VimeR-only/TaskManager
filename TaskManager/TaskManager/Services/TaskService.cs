@@ -54,9 +54,32 @@ namespace TaskManager.Services
 
             _db.Tasks.Remove(task);
 
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<Models.Task> UpdateTaskStatusAsync(int userId, int taskId, taskStatus status)
+        {
+            var task = await _db.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+
+            if (task == null)
+                return null;
+
+            task.Status = status;
+
+            _db.Tasks.Update(task);
+
+            await _db.SaveChangesAsync();
+
+            return task;
+        }
+
+        public async Task<Models.Task?> GetTaskUserId(int userId, int taskId)
+        {
+            var task = await _db.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+
+            return task;
         }
     }
 }
