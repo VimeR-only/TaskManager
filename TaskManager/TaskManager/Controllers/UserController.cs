@@ -27,7 +27,7 @@ namespace TaskManager.Controllers
             var user = await _userService.GetUserAsync(id);
 
             if (user == null)
-                return BadRequest();
+                return NotFound();
 
             UserGetDTOs userDto = new UserGetDTOs
             {
