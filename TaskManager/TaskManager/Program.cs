@@ -18,6 +18,7 @@ namespace TaskManager
             // Add services to the container.
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<ITaskService, TaskService>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
