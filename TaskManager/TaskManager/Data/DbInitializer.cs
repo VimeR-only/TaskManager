@@ -31,6 +31,7 @@ namespace TaskManager.Data
 
                 var user = new User
                 {
+                    Id = 1,
                     UserName = _config["FirstAdmin:Login"],
                     PasswordHash = hash,
                     PasswordSalt = salt,
@@ -39,7 +40,7 @@ namespace TaskManager.Data
 
                 _db.Users.Add(user);
 
-                Console.WriteLine("Firs Admin user created");
+                Console.WriteLine("[!] First Admin user created");
 
                 await _db.SaveChangesAsync();
             }

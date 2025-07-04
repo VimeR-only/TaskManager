@@ -58,7 +58,9 @@ namespace TaskManager.Controllers
 
             if (status)
             {
-                return Ok(_taskService.GetTaskUserId(userId, id));
+                var task = await _taskService.GetTaskUserId(userId, id);
+                
+                return Ok(task);
             }
             else
             {
